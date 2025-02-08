@@ -6,7 +6,7 @@ export default function Breakdown({ sentimentData }) {
   const data =
     sentimentData && sentimentData.length > 0
       ? sentimentData
-      : [{ id: 0, value: 1, label: "Null" }];
+      : [{ id: 0, value: 1, label: "No Data" }];
 
   const total = data.reduce((sum, item) => sum + item.value, 0);
 
@@ -18,8 +18,8 @@ export default function Breakdown({ sentimentData }) {
   };
 
   return (
-    <Box textAlign="center">
-      <Typography variant="h6" sx={{ marginBottom: 2, fontWeight: "bold" }}>
+    <Box textAlign="">
+      <Typography variant="h6" sx={{ padding: 2, fontWeight: "bold" }}>
         Sentiment Breakdown
       </Typography>
       <PieChart
@@ -33,8 +33,8 @@ export default function Breakdown({ sentimentData }) {
             arcLabel: (item) => `${((item.value / total) * 100).toFixed(2)}%`,
           },
         ]}
-        width={300}
-        height={250}
+        width={450}
+        height={310}
       />
     </Box>
   );
