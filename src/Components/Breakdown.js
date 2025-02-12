@@ -3,12 +3,12 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 export default function Breakdown({ sentimentData }) {
-  const data =
+  const sdata =
     sentimentData && sentimentData.length > 0
       ? sentimentData
       : [{ id: 0, value: 1, label: "No Data" }];
 
-  const total = data.reduce((sum, item) => sum + item.value, 0);
+  const total = sdata.reduce((sum, item) => sum + item.value, 0);
 
   const colorMapping = {
     Positive: "#28a745",
@@ -25,17 +25,23 @@ export default function Breakdown({ sentimentData }) {
       <PieChart
         series={[
           {
-            data: data.map((item, index) => ({
+            data: sdata.map((item) => ({
               ...item,
               color: colorMapping[item.label] || "#d3d3d3",
-              id: item.id + index * 10, // Ensuring unique spacing
             })),
-            arcLabel: (item) => `${((item.value / total) * 100).toFixed(2)}%`,
+            valueFormatter: (v, { dataIndex }) => {
+              const percentage = (
+                (sdata[dataIndex].value / total) *
+                100
+              ).toFixed(2);
+              return `${v.value} ${percentage}%`;
+            },
           },
         ]}
-        width={450}
         height={310}
       />
     </Box>
   );
 }
+
+

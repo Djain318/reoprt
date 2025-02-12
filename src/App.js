@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import "./App.css";
 import Breakdown from "./Components/Breakdown";
-import CallData from "./Components/CallData";
 import CallTrends from "./Components/CallTrends";
 import Grid from "@mui/material/Grid2";
 
 import dayjs from "dayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { dateWiseSummary } from "./util/apiHelper";
-import { Button, Card, Paper } from "@mui/material";
+import { Card } from "@mui/material";
 import BasicBars from "./Components/Barchart";
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
     completed: 0,
     hangup: 0,
   });
-
+  console.log(startDate);
   const handleApiCall = async () => {
     try {
       let response = await dateWiseSummary(startDate, endDate);
@@ -71,14 +70,21 @@ function App() {
     >
       <Grid container size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <Grid container padding={"1rem"}>
-          <div style={{ padding: "1rem", paddingBottom: "0rem", paddingLeft:"0rem" }}>
+          <div
+            style={{
+              padding: "1rem",
+              paddingBottom: "0rem",
+              paddingLeft: "0rem",
+            }}
+          >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Start Date"
                 value={startDate ? dayjs(startDate, "DD-MM-YYYY") : null}
                 onChange={(newValue) =>
-                  setStartDate(newValue ? newValue.format("DD-MM-YYYY") : null)+
-                  handleApiCall()
+                  setStartDate(
+                    newValue ? newValue.format("DD-MM-YYYY") : null
+                  ) + handleApiCall()
                 }
               />
             </LocalizationProvider>
@@ -96,7 +102,6 @@ function App() {
             </LocalizationProvider>
           </div>
         </Grid>
-        {/* <Button onClick={handleApiCall}>Fetch Data</Button> */}
       </Grid>
 
       <Grid container size={{ xs: 12, sm: 12, md: 12, lg: 12 }}>

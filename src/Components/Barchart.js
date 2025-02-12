@@ -25,7 +25,6 @@ export default function BasicBars({ callData, Completion }) {
         label: "Time (s)",
       },
     ],
-    width: Completion ? 500 : 600,
     height: 280,
     sx: {
       [`.${axisClasses.left} .${axisClasses.label}`]: {
